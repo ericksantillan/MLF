@@ -6,6 +6,25 @@ import random
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler, add_dummy_feature
+from preprocessing import preprocess
+
+def adaline_train(X,Y,eta=0.09,T=5000):
+    #I suppose that there a column of 1's in X to calculate w0
+    t=0
+    m,n = X.shape
+    print "m"
+    print m
+    w = np.zeros(n)
+    while (t<T):
+        r = random.randint(0,(m-1))
+        h_w = np.dot( X[r] , w )
+        # print("h_w: ",h_w)
+        dim= Y[r] - h_w
+        for i in range(0,n):
+            w[i] += eta * (dim )*X[r][i]
+        t+=1
+    print w
+    return w
 
 def perceptron_train(X, Y, eta=1, T=5000):
     #I suppose that there a column of 1's in X to calculate w0
@@ -36,8 +55,8 @@ def tranform_categorical(s):
     else:
         return -1
 
-
-#Preprocessing
+# XTrain, XTest, YTrain, YTest = preprocess("../Databases/ionosphere.data",34, tranform_categorical)
+# Preprocessing
 print("READING DataBase....")
 data = pd.read_csv("../Databases/ionosphere.data", header = None) #Reading
 target = pd.DataFrame(data[34]) #Y
@@ -51,25 +70,31 @@ y.head()
 features_p = add_dummy_feature(features)
 x = pd.DataFrame(features_p )
 
+sum_accu = 0
+repeat = 100
+for k in range(0,repeat):
 #Splitting between training and testing
-try:
-    from sklearn.model_selection import train_test_split    # sklearn > ...
-except:
-    from sklearn.cross_validation import train_test_split
+    try:
+        from sklearn.model_selection import train_test_split    # sklearn > ...
+    except:
+        from sklearn.cross_validation import train_test_split
 
-X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.4)
+    X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.4)
 
-XTrain = X_train.values
-XTest = X_test.values
-YTrain = y_train.values
-YTest = y_test.values
+    XTrain = X_train.values
+    XTest = X_test.values
+    YTrain = y_train.values
+    YTest = y_test.values
 
-print("Starting Training")
-W = perceptron_train(XTrain,YTrain)
-print W
+    print(k)
+    W = adaline_train(XTrain,YTrain)
+    # print W
 
-accu = perceptron_test(XTest,YTest,W)
-print(accu)
+    accu = perceptron_test(XTest,YTest,W)
+    print(accu)
+    sum_accu += accu
+
+print sum_accu
 
 
 #Scale data
