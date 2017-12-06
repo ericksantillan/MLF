@@ -6,7 +6,6 @@ import random
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler, add_dummy_feature
-from preprocessing import preprocess
 
 def adaline_train(X,Y,eta=0.09,T=5000):
     #I suppose that there a column of 1's in X to calculate w0
