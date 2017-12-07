@@ -21,8 +21,9 @@ def preprocess_ionosphere(data_folder,target_column, normalize=True):
     #tranform categorical to discrete
     y = target.applymap(discretize_func)
     #Add of a column of 1's to X
-    features_p = add_dummy_feature(features)
-    x = pd.DataFrame(features_p )
+    scaler = StandardScaler()
+    normFeatures = add_dummy_feature(scaler.fit_transform(features))
+    x = pd.DataFrame(normFeatures )
 
     return x,y
 
