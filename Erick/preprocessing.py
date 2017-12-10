@@ -52,6 +52,82 @@ def preprocess_fungus(data_folder):
     print x.values
     return x,y
 
+def preprocess_wisconsin(data_folder):
+    target_column = 10
+    def discretize_func(s):
+        if s == 2:
+            return 1
+        else:
+            return -1
+    data_file = data_folder + "breast-cancer-wisconsin.data"
+    data = pd.read_csv(data_file, header = None) #Reading
+    data = data.drop([0], axis=1)
+    # print data.values
+    target = pd.DataFrame(data[target_column]) #Y
+    features = data.drop([target_column], axis= 1) #X
+    #tranform categorical to discrete target
+    y = target.applymap(discretize_func)
+    #tranform categorical to discrete features
+    lenc = LabelEncoder()
+    num_features = features.apply(lenc.fit_transform)
+    # print num_features.values
+    scaler = StandardScaler()
+    normFeatures = add_dummy_feature(scaler.fit_transform(num_features))
+    x = pd.DataFrame(normFeatures )
+    print x.values
+    return x,y
+
+def preprocess_wdbc(data_folder):
+    target_column = 1
+    def discretize_func(s):
+        if s == 'M':
+            return 1
+        else:
+            return -1
+    data_file = data_folder + "wdbc.data"
+    data = pd.read_csv(data_file, header = None) #Reading
+    data = data.drop([0], axis=1)
+    # print data.values
+    target = pd.DataFrame(data[target_column]) #Y
+    features = data.drop([target_column], axis= 1) #X
+    #tranform categorical to discrete target
+    y = target.applymap(discretize_func)
+    print target.values
+    #tranform categorical to discrete features
+    lenc = LabelEncoder()
+    num_features = features.apply(lenc.fit_transform)
+    # print num_features.values
+    scaler = StandardScaler()
+    normFeatures = add_dummy_feature(scaler.fit_transform(num_features))
+    x = pd.DataFrame(normFeatures )
+    print x.values
+    return x,y
+
+def preprocess_wpbc(data_folder):
+    target_column = 1
+    def discretize_func(s):
+        if s == 'R':
+            return 1
+        else:
+            return -1
+    data_file = data_folder + "wpbc.data"
+    data = pd.read_csv(data_file, header = None) #Reading
+    data = data.drop([0], axis=1)
+    # print data.values
+    target = pd.DataFrame(data[target_column]) #Y
+    features = data.drop([target_column], axis= 1) #X
+    #tranform categorical to discrete target
+    y = target.applymap(discretize_func)
+    print target.values
+    #tranform categorical to discrete features
+    lenc = LabelEncoder()
+    num_features = features.apply(lenc.fit_transform)
+    # print num_features.values
+    scaler = StandardScaler()
+    normFeatures = add_dummy_feature(scaler.fit_transform(num_features))
+    x = pd.DataFrame(normFeatures )
+    print x.values
+    return x,y
 
 def split_train_test(x, y, testSize=0.4):
     X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=testSize)

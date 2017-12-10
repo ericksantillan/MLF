@@ -14,7 +14,7 @@ def logistic_function(X,Y,w):
     return l/m
 
 def f_grad(X,Y,w):
-    m, n = X.shape
+    m, n = X.shape    
     g = np.zeros(n)
     for j in range(0,m):
         if Y[j] >0:
@@ -23,8 +23,14 @@ def f_grad(X,Y,w):
             g += X[j]/( 1 + np.exp(-np.dot( X[j] , w ) ) )
     return g/m
 
-def gradient_descent(X,Y):
+def gradient_descent(X,Y,D=None):
     m, n = X.shape
+
+    if D is None:
+        D = np.zeros(m)
+        for k in range(0,m):
+            D[k]= 1.0/m
+
     gamma = 0.99
     epsilon = 0.01
     w = np.random.rand(n)
