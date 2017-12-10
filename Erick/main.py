@@ -11,7 +11,7 @@ from perceptron2 import perceptron_train, perceptron_test
 
 
 print("Preprocessing....")
-x, y= preprocess_ionosphere("../Databases/",34)
+x, y= preprocess_ionosphere("../Databases/")
 print("...Finished")
 
 repeat = 20

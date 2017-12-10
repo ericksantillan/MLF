@@ -8,7 +8,9 @@ try:
 except:
     from sklearn.cross_validation import train_test_split
 
-def preprocess_ionosphere(data_folder,target_column, normalize=True):
+
+def preprocess_ionosphere(data_folder,normalize=True):
+    target_column = 34
     def discretize_func(s):
         if s == 'g':
             return 1
@@ -26,6 +28,30 @@ def preprocess_ionosphere(data_folder,target_column, normalize=True):
     x = pd.DataFrame(normFeatures )
 
     return x,y
+
+def preprocess_fungus(data_folder):
+    target_column = 0
+    def discretize_func(s):
+        if s == 'e':
+            return 1
+        else:
+            return -1
+    data_file = data_folder + "agaricus-lepiota.data"
+    data = pd.read_csv(data_file, header = None) #Reading
+    target = pd.DataFrame(data[target_column]) #Y
+    features = data.drop([target_column], axis= 1) #X
+    #tranform categorical to discrete target
+    y = target.applymap(discretize_func)
+    #tranform categorical to discrete features
+    lenc = LabelEncoder()
+    num_features = features.apply(lenc.fit_transform)
+    print num_features.values
+    scaler = StandardScaler()
+    normFeatures = add_dummy_feature(scaler.fit_transform(num_features))
+    x = pd.DataFrame(normFeatures )
+    print x.values
+    return x,y
+
 
 def split_train_test(x, y, testSize=0.4):
     X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=testSize)
