@@ -1,2 +1,2 @@
 # MLF
-Several Machine Learning Algorithms written by Amini.
+Several Machine Learning Algorithms.
