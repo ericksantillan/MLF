@@ -74,7 +74,7 @@ def preprocess_wisconsin(data_folder):
     scaler = StandardScaler()
     normFeatures = add_dummy_feature(scaler.fit_transform(num_features))
     x = pd.DataFrame(normFeatures )
-    print x.values
+    # print x.values
     return x,y
 
 def preprocess_wdbc(data_folder):
@@ -92,7 +92,7 @@ def preprocess_wdbc(data_folder):
     features = data.drop([target_column], axis= 1) #X
     #tranform categorical to discrete target
     y = target.applymap(discretize_func)
-    print target.values
+    # print target.values
     #tranform categorical to discrete features
     lenc = LabelEncoder()
     num_features = features.apply(lenc.fit_transform)
@@ -100,7 +100,7 @@ def preprocess_wdbc(data_folder):
     scaler = StandardScaler()
     normFeatures = add_dummy_feature(scaler.fit_transform(num_features))
     x = pd.DataFrame(normFeatures )
-    print x.values
+    # print x.values
     return x,y
 
 def preprocess_wpbc(data_folder):
@@ -118,7 +118,7 @@ def preprocess_wpbc(data_folder):
     features = data.drop([target_column], axis= 1) #X
     #tranform categorical to discrete target
     y = target.applymap(discretize_func)
-    print target.values
+    # print target.values
     #tranform categorical to discrete features
     lenc = LabelEncoder()
     num_features = features.apply(lenc.fit_transform)
@@ -126,7 +126,7 @@ def preprocess_wpbc(data_folder):
     scaler = StandardScaler()
     normFeatures = add_dummy_feature(scaler.fit_transform(num_features))
     x = pd.DataFrame(normFeatures )
-    print x.values
+    # print x.values
     return x,y
 
 def split_train_test(x, y, testSize=0.4):

@@ -3,7 +3,6 @@ import random
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler, add_dummy_feature
-from preprocessing import preprocess
 
 
 def logistic_function(X,Y,w):
@@ -14,7 +13,7 @@ def logistic_function(X,Y,w):
     return l/m
 
 def f_grad(X,Y,w):
-    m, n = X.shape    
+    m, n = X.shape
     g = np.zeros(n)
     for j in range(0,m):
         if Y[j] >0:
@@ -62,42 +61,42 @@ def tranform_categorical(s):
         return 1
     else:
         return -1
-
-print("READING DataBase....")
-data = pd.read_csv("../Databases/ionosphere.data", header = None) #Reading
-target = pd.DataFrame(data[34]) #Y
-features = data.drop([34], axis= 1) #X
-
-print("Preprocessing Data")
-#tranform categorical to discrete
-y = target.applymap(tranform_categorical)
-y.head()
-#Add of a column of 1's to X
-features_p = add_dummy_feature(features)
-x = pd.DataFrame(features_p )
-
-sum_accu = 0
-repeat = 10
-for k in range(0,repeat):
-#Splitting between training and testing
-    try:
-        from sklearn.model_selection import train_test_split    # sklearn > ...
-    except:
-        from sklearn.cross_validation import train_test_split
-
-    X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.4)
-
-    XTrain = X_train.values
-    XTest = X_test.values
-    YTrain = y_train.values
-    YTest = y_test.values
-
-    print(k)
-    w = gradient_descent(XTrain, YTrain)
-    print(w)
-    acc = logistic_test(XTest, YTest, w)
-    print acc
-
-
-
-print sum_accu
+#
+# print("READING DataBase....")
+# data = pd.read_csv("../Databases/ionosphere.data", header = None) #Reading
+# target = pd.DataFrame(data[34]) #Y
+# features = data.drop([34], axis= 1) #X
+#
+# print("Preprocessing Data")
+# #tranform categorical to discrete
+# y = target.applymap(tranform_categorical)
+# y.head()
+# #Add of a column of 1's to X
+# features_p = add_dummy_feature(features)
+# x = pd.DataFrame(features_p )
+#
+# sum_accu = 0
+# repeat = 10
+# for k in range(0,repeat):
+# #Splitting between training and testing
+#     try:
+#         from sklearn.model_selection import train_test_split    # sklearn > ...
+#     except:
+#         from sklearn.cross_validation import train_test_split
+#
+#     X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.4)
+#
+#     XTrain = X_train.values
+#     XTest = X_test.values
+#     YTrain = y_train.values
+#     YTest = y_test.values
+#
+#     print(k)
+#     w = gradient_descent(XTrain, YTrain)
+#     print(w)
+#     acc = logistic_test(XTest, YTest, w)
+#     print acc
+#
+#
+#
+# print sum_accu
