@@ -1,10 +1,12 @@
+import numpy as np
+import random
 
 def adaline_train(X,Y,eta=0.09,T=5000):
     #I suppose that there a column of 1's in X to calculate w0
     t=0
     m,n = X.shape
-    print "m"
-    print m
+    # print "m"
+    # print m
     w = np.zeros(n)
     while (t<T):
         r = random.randint(0,(m-1))
@@ -14,7 +16,7 @@ def adaline_train(X,Y,eta=0.09,T=5000):
         for i in range(0,n):
             w[i] += eta * (dim )*X[r][i]
         t+=1
-    print w
+    # print w
     return w
 
 def adaline_test(X,Y,W):
